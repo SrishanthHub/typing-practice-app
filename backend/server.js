@@ -21,12 +21,15 @@ async function start() {
 
   const app = express();
   app.use(cors({
-    origin: [
-      'http://localhost:5173',
-      'https://typing-practice-webapp.vercel.app'
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],  // allow needed methods
-    credentials: true                           // if you use cookies/auth
+    origin: function (origin, callback) {
+      if (!origin || origin.startsWith('http://localhost') || origin.endsWith('.vercel.app')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
   }));
   app.use(express.json({ limit: '1mb' }));
 
