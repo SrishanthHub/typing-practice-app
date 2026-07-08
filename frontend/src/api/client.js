@@ -1,6 +1,12 @@
 const DEV_API = 'http://localhost:5001/api';
 const PROD_API = 'https://keyflow-backend-w0br.onrender.com/api';
-const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? DEV_API : PROD_API);
+
+let envUrl = import.meta.env.VITE_API_URL;
+if (envUrl && !envUrl.endsWith('/api')) {
+  envUrl = envUrl.replace(/\/$/, '') + '/api';
+}
+
+const API_URL = envUrl || (import.meta.env.DEV ? DEV_API : PROD_API);
 export const API_BASE = API_URL.replace(/\/api\/?$/, '');
 
 function getToken() {
