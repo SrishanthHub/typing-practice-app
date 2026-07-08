@@ -20,7 +20,12 @@ async function start() {
   const uploadRoutes = require('./routes/upload');
 
   const app = express();
-  app.use(cors());
+  app.use(cors({
+    origin: [
+      'http://localhost:5173',
+      'https://typing-practice-webapp.vercel.app'
+    ]
+  }));
   app.use(express.json({ limit: '1mb' }));
 
   app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
