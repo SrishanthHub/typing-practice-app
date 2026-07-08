@@ -24,7 +24,9 @@ async function start() {
     origin: [
       'http://localhost:5173',
       'https://typing-practice-webapp.vercel.app'
-    ]
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],  // allow needed methods
+    credentials: true                           // if you use cookies/auth
   }));
   app.use(express.json({ limit: '1mb' }));
 
